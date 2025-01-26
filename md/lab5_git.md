@@ -16,7 +16,6 @@ This lab will walk you through practicing branching and resolving conflicts in a
 - Basic understanding of Git commands.
 - A text editor like `nano`, `vim`, or `code` (VS Code) for editing files.
 - VS Code installed.
-- Install the GitLens extension in VS Code for better Git visualization.
 
 ---
 
@@ -143,6 +142,8 @@ This lab will walk you through practicing branching and resolving conflicts in a
 
 1. **Create a directory for the repository:**
    ```bash
+   cd ~
+
    rm -r git-branching-practice
 
    mkdir git-branching-practice && cd git-branching-practice
@@ -170,6 +171,12 @@ This lab will walk you through practicing branching and resolving conflicts in a
    - Click on the branch name in the bottom-left corner.
    - Select `Create new branch` and name it `feature-branch`.
 
+![](./images/b4.png)
+
+![](./images/b5.png)
+
+![](./images/b6.png)
+
 2. **Switch to the new branch:**
    - Use the same branch menu in the bottom-left corner to switch to `feature-branch`.
 
@@ -179,12 +186,14 @@ This lab will walk you through practicing branching and resolving conflicts in a
    - Save the file.
    - Use the Source Control tab to stage and commit the change with a message: `Added changes in feature branch`.
 
+![](./images/b7.png)
+
 ### Step 3: Create a Conflict
 
-1. **Switch back to the `main` branch:**
-   - Use the branch menu in the bottom-left corner to switch back to `main`.
+1. **Switch back to the `master` branch:**
+   - Use the branch menu in the bottom-left corner to switch back to `master`.
 
-2. **Make a conflicting change in the file on the `main` branch:**
+2. **Make a conflicting change in the file on the `master` branch:**
    - Open `main.txt` in VS Code.
    - Add the line: `This is a change made in the main branch.`
    - Save the file.
@@ -197,6 +206,8 @@ This lab will walk you through practicing branching and resolving conflicts in a
      ```
    - VS Code will highlight the conflict in `main.txt`.
 
+![](./images/b8.png)
+
 ### Step 4: Resolve the Conflict
 
 1. **Open the conflicted file:**
@@ -206,15 +217,20 @@ This lab will walk you through practicing branching and resolving conflicts in a
    - Click on `Accept Current Change`, `Accept Incoming Change`, or `Accept Both Changes` as appropriate.
    - Alternatively, manually edit the file in the editor.
 
+![](./images/b9.png)
+
 3. **Stage and commit the resolved file:**
    - Use the Source Control tab to stage and commit the file with a message: `Resolved conflict between main and feature-branch`.
 
 ### Step 5: Verify the Merge
 
 1. **Check the commit history:**
-   - Use the GitLens extension in VS Code to view the commit history graphically.
+   ```bash
+   git log --oneline
+   ```
+   ![](./images/b10.png)
 
-2. **Delete the feature branch (optional):**
+2. **Delete the feature branch:** (optional)
    - Open the terminal in VS Code and run:
      ```bash
      git branch -d feature-branch
