@@ -1,4 +1,4 @@
-# Practice Basic Package Management Commands to Add, Update, and Remove Dependencies
+# Lab: Practice Basic Package Management Commands to Add, Update, and Remove Dependencies
 
 ## Lab Overview
 In this lab, you will practice adding, updating, and removing dependencies using package management tools in both Node.js (npm) and Python (pip).

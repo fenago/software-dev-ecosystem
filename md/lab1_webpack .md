@@ -1,4 +1,4 @@
-# Setting Up a Simple Project with npm and Webpack
+# Lab: Setting Up a Simple Project with npm and Webpack
 
 This guide will walk you through setting up a simple project using npm, installing dependencies, and creating a Webpack build script.
 

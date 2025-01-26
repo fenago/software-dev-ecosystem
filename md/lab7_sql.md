@@ -1,4 +1,4 @@
-# Step-by-Step Guide: Connect to SQL Server and Design a Basic SQL Schema
+# Lab: Design and implement a basic SQL schema using SQL Server, with tables and relationships
 
 This guide will walk you through the process of connecting to a SQL Server instance using SSH and designing a basic SQL schema with tables and relationships. Follow these steps carefully to complete the process.
 
@@ -14,6 +14,15 @@ This guide will walk you through the process of connecting to a SQL Server insta
    Replace `username` with your SSH username and `remote_host` with the IP address or hostname of the remote machine.
 3. If prompted, enter your SSH password to establish the connection.
 
+4.  The server is ready for connections once the SQL Server error logs display the message: SQL Server is now ready for client connections. This is an informational message; no user action is required. You can review the SQL Server error log inside the container using the command:
+
+```
+docker exec -t sql1 cat /var/opt/mssql/log/errorlog | grep connection
+```
+
+![](./images/s1.png)
+
+
 ---
 
 ## Step 2: Access the SQL Server Instance Using Docker
@@ -26,21 +35,27 @@ This guide will walk you through the process of connecting to a SQL Server insta
 
 2. Use the following command to connect to the SQL Server instance:
    ```bash
-   /opt/mssql-tools18/bin/sqlcmd -S localhost,1433 -U SA -P yourStrongPassword123 -N -C
+   /opt/mssql-tools18/bin/sqlcmd -S localhost,1433 -U SA -P SoftwareEco123 -N -C
    ```
    - `-S localhost,1433`: Specifies the server and port.
    - `-U SA`: Specifies the username (System Administrator).
-   - `-P yourStrongPassword123`: Specifies the password.
+   - `-P SoftwareEco123`: Specifies the password.
    - `-N`: Ensures encryption of data.
    - `-C`: Trusts the server certificate.
 
 3. Once connected, you will see the `1>` prompt, indicating that you are ready to execute SQL commands.
+
+![](./images/s2.png)
+
 
 ---
 
 ## Step 3: Design a Basic SQL Schema
 
 ### 3.1 Create a Database
+
+**NOTE:** When using sqlcmd, avoid directly pasting entire queries. Instead, copy and paste line by line or manually type the query into the command line. Directly pasting large blocks of queries might result in unexpected behavior.
+
 
 1. Execute the following command to create a new database:
    ```sql
@@ -67,6 +82,9 @@ CREATE TABLE Users (
 );
 GO
 ```
+
+![](./images/s3.png)
+
 
 #### Table: `Posts`
 This table will store posts created by users.
@@ -115,44 +133,9 @@ GO
 
 ---
 
-## Step 4: Display Relationships Using CLI
+### Create an ASCII Representation of Relationships
 
-### 4.1 Query Foreign Key Relationships
-
-To view relationships between tables, execute the following query:
-
-```sql
-SELECT 
-    fk.name AS ForeignKeyName,
-    tp.name AS ParentTable,
-    cp.name AS ParentColumn,
-    tr.name AS ReferencedTable,
-    cr.name AS ReferencedColumn
-FROM 
-    sys.foreign_keys AS fk
-INNER JOIN 
-    sys.foreign_key_columns AS fkc ON fk.object_id = fkc.constraint_object_id
-INNER JOIN 
-    sys.tables AS tp ON fkc.parent_object_id = tp.object_id
-INNER JOIN 
-    sys.columns AS cp ON fkc.parent_object_id = cp.object_id AND fkc.parent_column_id = cp.column_id
-INNER JOIN 
-    sys.tables AS tr ON fkc.referenced_object_id = tr.object_id
-INNER JOIN 
-    sys.columns AS cr ON fkc.referenced_object_id = cr.object_id AND fkc.referenced_column_id = cr.column_id;
-GO
-```
-
-This will display a tabular list of foreign key relationships, showing:
-- **ForeignKeyName**: Name of the foreign key.
-- **ParentTable**: The table containing the foreign key.
-- **ParentColumn**: The column acting as the foreign key.
-- **ReferencedTable**: The table being referenced.
-- **ReferencedColumn**: The primary key or unique column being referenced.
-
-### 4.2 Create an ASCII Representation of Relationships
-
-Based on the relationships, you can manually create an ASCII-style diagram. For example:
+Based on the relationships, here is ASCII-style diagram:
 
 ```
 Users
@@ -166,16 +149,6 @@ Users
               └── UserID (Foreign Key → Users.UserID)
 ```
 
-To save this representation:
-1. Open a file in a text editor:
-   ```bash
-   nano schema_diagram.txt
-   ```
-2. Paste the ASCII diagram and save the file.
-3. You can then display the file's contents using:
-   ```bash
-   cat schema_diagram.txt
-   ```
 
 ---
 
