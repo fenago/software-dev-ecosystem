@@ -119,9 +119,7 @@ GO
 
 1. Use the following command to list all tables:
    ```sql
-   SELECT TABLE_NAME
-   FROM INFORMATION_SCHEMA.TABLES
-   WHERE TABLE_TYPE = 'BASE TABLE';
+   SELECT TABLE_NAME  FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE';
    GO
    ```
 2. Use the following command to inspect the structure of a specific table:
@@ -180,6 +178,8 @@ VALUES (1, 2, 'Great post!'),
 GO
 ```
 
+![](./images/s4.png)
+
 ### 5.2 Query Data
 
 1. Retrieve all users:
@@ -202,6 +202,8 @@ GO
    WHERE Comments.PostID = 1;
    GO
    ```
+
+![](./images/s5.png)
 
 ---
 
