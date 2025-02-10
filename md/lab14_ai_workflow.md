@@ -22,9 +22,9 @@ By the end of this lab, you will:
 1. Fill in the required details or Signup using other options.
 2. Click the **Sign Up** button.
 
-![](./images/1.png)
+![](./images_langflow/1.png)
 
-![](./images/2.png)
+![](./images_langflow/2.png)
 
 
 ### **Step 3: Verify Your Email (If Required)**
@@ -155,22 +155,22 @@ Create a flow to:
 #### **Step 1: Create a New Flow**
 1. Log in to LangFlow.
 2. On the dashboard, click **New Flow**.
-![](./images/3.png)
+![](./images_langflow/3.png)
 
 3. Now, click **Blank Flow**.
-![](./images/4.png)
+![](./images_langflow/4.png)
 
 #### **Step 2: Add an Input Node**
 1. Drag and drop the **Input** node onto the canvas.
 2. Select **Chat Input**.
 
-![](./images/5.png)
+![](./images_langflow/5.png)
 
 #### **Step 3: Add a Calculation Node**
 1. Drag the **Calculation** node to the canvas.
 2. Enter Expression: `Recruiter commission (e.g., 10% of placement cost)`.
 
-![](./images/5_1.png)
+![](./images_langflow/5_1.png)
 
 #### **Step 4: Add an Agent Node**
 1. Drag the **Agent** node onto the canvas.
@@ -181,13 +181,13 @@ Create a flow to:
 1. Drag the **Chat Output** node onto the canvas.
 2. Connect it to the `Response` part of `Agent` node.
 
-![](./images/6.png)
+![](./images_langflow/6.png)
 
 #### **Step 6: Test the Flow**
 
 1. Click Playground button:
 
-![](./images/p1.png)
+![](./images_langflow/p1.png)
 
 2. Enter sample data in the playground:
    ```
@@ -200,7 +200,7 @@ Create a flow to:
 
 3. Run the flow and review the generated invoice.
 
-   ![](./images/7.png)
+   ![](./images_langflow/7.png)
 
 
 2. Enter new data in the playground to generate invoice:
@@ -220,11 +220,11 @@ Create a flow to:
 
 3. Run the flow and review the generated invoice.
 
-   ![](./images/8.png)
+   ![](./images_langflow/8.png)
 
-   ![](./images/9.png)
+   ![](./images_langflow/9.png)
 
-   ![](./images/10.png)
+   ![](./images_langflow/10.png)
 
 
 ### Task: Explore the Flow
@@ -253,19 +253,19 @@ Create a flow to:
 2. Configure it to upload:
    - Government policy document `canada_visa_requirements.pdf` from the GitHub repo.
 
-![](./images/s1.png)
+![](./images_langflow/s1.png)
 
 #### **Step 3: Add Parse Data Node**
 1. Drag and drop the **Parse Data** node onto the canvas.
 2. Set **Template** to `{text}`.
 
-![](./images/s2.png)
+![](./images_langflow/s2.png)
 
 #### **Step 4: Add Chat Input Node**
 1. Drag and drop the **Chat Input** node onto the canvas.
 2. Set **Text** to `What is this document is about?`.
 
-![](./images/s3.png)
+![](./images_langflow/s3.png)
 
 #### **Step 5: Add Prompt Node**
 1. Drag and drop the **Prompt** node onto the canvas.
@@ -283,24 +283,24 @@ Create a flow to:
    ```
 
 
-![](./images/s4.png)
+![](./images_langflow/s4.png)
 
 #### **Step 6: Add OpenAI Node**
 1. Drag the **OpenAI** node onto the canvas.
 2. Enter `OpenAI API Key` key.
 
-![](./images/s5.png)
+![](./images_langflow/s5.png)
 
 
 #### **Step 7: Add Chat Output Node**
 1. Drag and drop the **Chat Output** node onto the canvas.
 
-![](./images/s6.png)
+![](./images_langflow/s6.png)
 
 #### **Step 8: Connect all nodes as shown below:**
 
 Connect all the nodes as shown below:
-![](./images/sf.png)
+![](./images_langflow/sf.png)
 
 
 
@@ -308,11 +308,11 @@ Connect all the nodes as shown below:
 
 1. Upload file `canada_visa_requirements.pdf` and click **Run** icon:
 
-![](./images/s7.png)
+![](./images_langflow/s7.png)
 
 2. Click Playground button:
 
-![](./images/p1.png)
+![](./images_langflow/p1.png)
 
 3. Enter sample data in the playground:
    - What is this document is about?
@@ -320,8 +320,8 @@ Connect all the nodes as shown below:
    - Do people from SouthAfrica need to apply for Visa?
    - What is the requirement for Workers and students visa?
 
-![](./images/s8.png)
+![](./images_langflow/s8.png)
 
-![](./images/s9.png)
+![](./images_langflow/s9.png)
 
-![](./images/s10.png)
+![](./images_langflow/s10.png)
