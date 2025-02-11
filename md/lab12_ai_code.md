@@ -1,19 +1,21 @@
 ## Lab: Use AI to generate basic code snippets and analyze its suggestions
 
-## Purpose
-In this exercise, you will learn how to utilize a free AI service—like ChatGPT—to generate simple code snippets in Node.js and Python. You will then test these snippets in your own lab environment, identify any errors, and report them back to ChatGPT for further assistance.
+In this lab, you will learn how to utilize a AI service—like ChatGPT—to generate simple code snippets in Node.js and Python. You will then test these snippets in your own lab environment, identify any errors, and report them back to ChatGPT for further assistance.
 
 ---
 
-## Step-by-Step Lab Instructions
+### Step-by-Step Lab Instructions
 
-### 1. Access a Free ChatGPT-like Tool
-1. Go to [https://chat.openai.com](https://chat.openai.com) or another publicly available ChatGPT-like interface.
+### 1. Access a ChatGPT-like Tool
+1. Go to [https://chatgpt.com/](https://chatgpt.com/)
 2. Log in or create an account if needed.
 
 ### 2. Generate a Simple Node.js Program
 1. In the AI chat, type:
    **"Write a Node.js program that prints 'Hello from Node.js!'"**
+
+   ![](./images/w36.png)
+
 2. Copy the generated code snippet.
 3. Create a file named `node_example.js` in your lab environment.
 4. Paste the code into `node_example.js`.
@@ -26,8 +28,7 @@ In this exercise, you will learn how to utilize a free AI service—like ChatGPT
    **"I got the following error. How can I fix this?"**
 
 #### Analyzing ChatGPT Suggestions
-1. Look at the structure of the code and see if it follows standard Node.js conventions (e.g., using `console.log`, proper syntax, etc.).
-2. If ChatGPT suggests installing a package or using a module, verify that you have the module installed by running `npm install <module-name>` if needed.
+Look at the structure of the code and see if it follows standard Node.js conventions (e.g., using `console.log`, proper syntax, etc.).
 
 ---
 
@@ -41,17 +42,13 @@ In this exercise, you will learn how to utilize a free AI service—like ChatGPT
    ```bash
    python python_example.py
    ```
-   or
-   ```bash
-   python3 python_example.py
-   ```
 6. Observe the output.
 7. If any errors occur, copy and paste the error into ChatGPT and ask:
    **"Why am I getting this error and how can I fix it?"**
 
 #### Analyzing ChatGPT Suggestions
-1. Observe how ChatGPT structures the Python code, such as using `print()` statements, variable declarations, or function definitions.
-2. If ChatGPT recommends a certain library, like `requests` or `numpy`, check whether it’s installed by running `pip install <library-name>`.
+Observe how ChatGPT structures the Python code, such as using `print()` statements, variable declarations, or function definitions.
+
 
 ---
 
@@ -73,6 +70,8 @@ Try generating solutions to the following tasks in **both Node.js and Python**. 
    const nums = [10, 3, 25, 7];
    console.log("Max number:", findMax(nums));
    ```
+
+   ![](./images/w37.png)
 
    **Sample Python Code**:
    ```python
@@ -153,9 +152,3 @@ After running each program:
 - **Check for Efficiency**: Ask ChatGPT if there is a more efficient solution (e.g., shorter runtime, less memory usage).
 - **Request Clarification**: If ChatGPT references unfamiliar concepts, ask for a short explanation or a breakdown.
 
----
-
-### 6. Document Your Observations
-1. Make a note of any successful outputs.
-2. For any errors, describe how you used ChatGPT to troubleshoot.
-3. Summarize what you learned about AI-generated code and how you analyzed its suggestions.

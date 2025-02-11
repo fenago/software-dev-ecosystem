@@ -1,11 +1,10 @@
 ## Lab: Add SSL to a sample application for encrypted data transfer
 
-## Introduction
-
 Secure Sockets Layer (SSL) or Transport Layer Security (TLS) is crucial for encrypting data transfer between clients and servers. This guide assumes you are using Ubuntu and demonstrates how to add SSL/TLS to a Node.js or Python application using a self-signed certificate. Certificates and keys will be stored in a `/certs` directory.
 
 ---
-## Step 1: Create a Directory and Generate SSL Certificates
+
+### Step 1: Create a Directory and Generate SSL Certificates
 
 1. **Create a `/certs` directory** (to store certificates and keys):
    ```bash
@@ -14,12 +13,16 @@ Secure Sockets Layer (SSL) or Transport Layer Security (TLS) is crucial for encr
 2. **Generate a Self-Signed Certificate**:
    ```bash
    cd /certs
-   openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+
+   openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes -subj "/CN=localhost"
    ```
    - This will produce a private key (`key.pem`) and a certificate (`cert.pem`).
 
+![](./images/w31.png)
+
+
 ---
-## Step 2: SSL Setup in Node.js
+### Step 2: SSL Setup in Node.js
 
 Below is a simple example using the built-in `https` module.
 
@@ -67,11 +70,18 @@ Below is a simple example using the built-in `https` module.
    node server.js
    ```
 5. **Test**:
-   - Open `https://localhost/` in your browser (or the server’s hostname/IP if remote).
+   - Open `https://localhost/` in `Firefox` browser installed inside lab environment.
    - You may see a warning for the self-signed certificate.
 
+![](./images/w32.png)
+
+![](./images/w33.png)
+
+**Note:** Make sure to exit server before proceeding to next steps.
+
+
 ---
-## Step 3: SSL Setup in Python
+### Step 3: SSL Setup in Python
 
 Here is an example using Python’s built-in `ssl` library with a simple HTTP server, followed by a Flask application example.
 
@@ -102,15 +112,32 @@ Here is an example using Python’s built-in `ssl` library with a simple HTTP se
    python server.py
    ```
 3. **Test**:
-   - Visit `https://localhost:4443/`.
+   - Visit `https://localhost:4443/` in `Firefox` browser.
    - Accept any self-signed certificate warnings.
+
+![](./images/w34.png)
+
+**Note:** Make sure to exit server before proceeding to next steps.
+
 
 ### Option B: Flask Application with SSL
 
-1. **Install Flask**:
-   ```bash
-   pip install flask
-   ```
+1. Install Flask:
+```bash
+cd ~/Desktop
+
+mkdir ssl-python && cd ssl-python
+```
+2. Create a virtual environment:
+```bash
+   python3 -m venv venv
+```
+3. Activate the virtual environment in Linux and install flask:
+```bash
+source venv/bin/activate
+
+pip install flask
+```
 
 2. **Create a Flask App with SSL**:
    ```python
@@ -129,16 +156,20 @@ Here is an example using Python’s built-in `ssl` library with a simple HTTP se
        app.run(host='0.0.0.0', port=443, ssl_context=context)
    ```
 
+   **Note:** Create `app.py` file and paste above code.
+
 3. **Run the Application**:
    ```bash
    python app.py
    ```
 4. **Test**:
-   - Open `https://localhost/`.
+   - Open `https://localhost/` in `Firefox` browser.
    - You may see a security warning if using a self-signed certificate.
 
----
-## Conclusion
+![](./images/w35.png)
+
+
+### Conclusion
 
 Adding SSL/TLS to your application on Ubuntu involves creating a `/certs` directory, generating a self-signed certificate, and configuring your server to use these credentials. Follow these steps to ensure your data is encrypted and secure.
 

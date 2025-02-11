@@ -31,31 +31,43 @@ By the end of this lab, you will:
 1. Check your inbox for a verification email from LangFlow.
 2. Click on the verification link to activate your account.
 
-### **Step 4: Log In**
+
+## **Use Case : Coding Assistant**
+
+## Step 1: Log In
 1. Return to [LangFlow](https://www.langflow.org/) and **Log In**.
 
-
-### **Use Case : Coding Assistant**
-
 ## Step 2: Create a New Flow
+1. Log in to LangFlow.
+2. On the dashboard, click **New Flow**.
+![](./images_langflow/3.png)
 
-1. Click **"Create New"** or **"New Flow"** in the Langflow UI.
-2. You will see an empty canvas where you can add nodes.
+3. Now, click **Blank Flow**.
+![](./images_langflow/4.png)
 
 ---
 
-## Step 3: Add an LLM Node
+## Step 3: Add a Chat Input Node
 
-1. On the left panel, locate the **LLM** section.
-2. Drag an **OpenAI** (or your preferred model) node onto the canvas.
+Drag a **Chat Input** node from the **Inputs** section to the canvas.
+
+![](./images_langflow/5.png)
+
+## Step 4: Add OpenAI Node
+
+1. On the left panel, search for the **OpenAI**.
+2. Drag an **OpenAI**  node onto the canvas.
 3. In the node's settings, configure the following:
-   - **Model**: Choose a model (e.g., GPT-3.5, GPT-4) that best fits your debugging/commenting needs.
+   - **Model**: keep the default model or you can choose a different model.
    - **API Key**: Provide your API key.
    - **Temperature**: Set an appropriate value (e.g., 0.3) to keep the responses somewhat focused.
+4. Link **Chat Input** with **Input**:
+
+![](./images_langflow/c1.png)
 
 ---
 
-## Step 4: Add a Prompt Template Node
+## Step 5: Add a Prompt Template Node
 
 1. Find the **Prompt Template** node in the **Prompts** section.
 2. Drag the **Prompt Template** node onto the canvas.
@@ -63,7 +75,6 @@ By the end of this lab, you will:
    - **Prompt**: Provide a template that indicates the desired output. For instance:
 
      ```
-     """
      You are an AI code reviewer. Below is a code snippet:
      {code_snippet}
 
@@ -74,25 +85,22 @@ By the end of this lab, you will:
      Output Format:
      - Comments: <Your code comments>
      - Debug Suggestions: <Your debugging tips>
-     """
      ```
    - **Input Variables**: Set the variable name to `code_snippet` so it can dynamically receive code.
 
+   ![](./images_langflow/c2.png)
+
+
+   ![](./images_langflow/c3.png)
+
+
 ---
 
-## Step 5: Connect Nodes
+## Step 6: Connect Nodes
 
-1. Connect the **Prompt Template** node's output to the **LLM** node's input.
+1. Make sure to connect the **Prompt** node's output to the **OpenAI** node's input.
 2. This ensures that the final prompt from the template will be processed by the model.
 
----
-
-## Step 6: Add a User Input Node
-
-1. If you want to test quickly, you can create a user input field.
-2. Drag a **Text Input** node from the **Inputs** section to the canvas.
-3. Configure it with a label like "Code Snippet".
-4. Connect the **Text Input** node to the **Prompt Template** node's `code_snippet` variable.
 
 This setup will let you paste code directly into Langflow for analysis.
 
@@ -100,15 +108,20 @@ This setup will let you paste code directly into Langflow for analysis.
 
 ## Step 7: Add an Output Display Node
 
-1. Drag an **Output** or **ChatBox** node from the **Outputs** section.
-2. Connect the **LLM** node to this output node.
+1. Drag an **Chat Output** node from the **Outputs** section.
+2. Connect the **OpenAI** node to this output node.
 3. This node will display the AI-generated comments and debug suggestions in an easy-to-read format.
+
+![](./images_langflow/c4.png)
+
 
 ---
 
 ## Step 8: Run the Flow
 
-1. Once everything is connected, press **Run** or the equivalent button in Langflow.
+1. Once everything is connected, press **Playground** button in Langflow:
+![](./images_langflow/p1.png)
+
 2. In the text input field for code snippet, paste some sample code. For example:
    ```python
    def add_numbers(a, b):
@@ -116,6 +129,7 @@ This setup will let you paste code directly into Langflow for analysis.
        return c
    ```
 3. The output node should display the AI-generated comments and debug suggestions.
+![](./images_langflow/c5.png)
 
 ---
 
@@ -126,23 +140,15 @@ This setup will let you paste code directly into Langflow for analysis.
 3. If you find the AI incorrectly identifies bugs or provides irrelevant comments, add clarifying instructions to the prompt.
 
 
----
-
-## Testing Use Cases
-
-Try different code snippets:
-1. **Simple**: A small function without errors.
-2. **Moderate Complexity**: A function with minor logical issues.
-3. **Complex**: Multiple interacting classes or modules.
-
-Compare the AI’s output for each scenario.
+### Task
+Enter different code snippets from the previous labs and analyze the output.
 
 
+---------------------------------------------------
 
+### Bonus Tasks
 
----
-
-# **Use Case 1: Health Care Staffing Invoice Generator**
+### **Use Case 1: Health Care Staffing Invoice Generator**
 
 ### **Objective**:
 Create a flow to:

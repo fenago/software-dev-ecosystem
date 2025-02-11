@@ -1,39 +1,12 @@
 ## Lab: Implement basic RBAC in a pre-built sample app to restrict access to specific user roles
 
-In this guide, we will walk through setting up basic RBAC (Role-Based Access Control) for a pre-built sample application **step by step**, first in **Python** (Flask) and then in **Node.js** (Express). RBAC is a method of regulating access to application resources and actions based on user roles.
+In this lab, we will walk through setting up basic RBAC (Role-Based Access Control) for a sample application **step by step**, first in **Python** (Flask) and then in **Node.js** (Express). RBAC is a method of regulating access to application resources and actions based on user roles.
 
----
-
-## Table of Contents
-1. [Prerequisites](#prerequisites)
-2. [Overview of RBAC](#overview-of-rbac)
-3. [Sample Project Setup](#sample-project-setup)
-4. [Defining Roles and Permissions](#defining-roles-and-permissions)
-5. [Storing User Roles](#storing-user-roles)
-6. [Implementing RBAC in Python](#implementing-rbac-in-python)
-    - [Installing Dependencies](#installing-dependencies)
-    - [Configuring Roles and Permissions](#configuring-roles-and-permissions)
-    - [Middleware for Access Control](#middleware-for-access-control)
-    - [Using Decorators or Wrapper Functions](#using-decorators-or-wrapper-functions)
-    - [Example Routes](#example-routes)
-    - [Complete Example (Flask)](#complete-example-flask)
-7. [Implementing RBAC in Node.js](#implementing-rbac-in-nodejs)
-    - [Installing Dependencies](#installing-dependencies-1)
-    - [Configuring Roles and Permissions](#configuring-roles-and-permissions-1)
-    - [Middleware for Access Control](#middleware-for-access-control-1)
-    - [Example Routes](#example-routes-1)
-    - [Complete Example (Express)](#complete-example-express)
-8. [Testing RBAC Functionality](#testing-rbac-functionality)
-9. [How to Call and Test the APIs](#how-to-call-and-test-the-apis)
-10. [Summary and Next Steps](#summary-and-next-steps)
-
----
 
 ## 1. Prerequisites
 - Basic knowledge of either **Python** (Flask/FastAPI) or **Node.js** (Express.js).
-- A simple pre-built sample application where you can integrate RBAC.
-- A database or in-memory store (like a JSON file) to store user details and roles.
-- Familiarity with user authentication (e.g., sessions, tokens, etc.).
+- A simple sample application where you can integrate RBAC.
+
 
 ## 2. Overview of RBAC
 1. **Users** are assigned **roles**.
@@ -47,7 +20,7 @@ RBAC ensures that users only have access to what they need for their role.
 2. **Node.js** sample project using Express.
 3. A simple authentication strategy (JWT tokens or session-based) already integrated.
 
-In this guide, we will implement RBAC **first in Python** (Flask) and **then in Node.js** (Express). Follow each step carefully.
+In this lab, we will implement RBAC **first in Python** (Flask) and **then in Node.js** (Express). Follow each step carefully.
 
 ---
 
@@ -70,10 +43,24 @@ How you store roles depends on your existing setup:
 ## 6. Implementing RBAC in Python
 
 ### 6.1 Installing Dependencies
-If using **Flask**:
-```bash
-pip install flask
-```
+
+1. Create a new directory:
+  ```bash
+  cd ~/Desktop
+
+  mkdir rbac-python && cd rbac-python
+  ```
+
+2. Create a virtual environment:
+  ```bash
+   python3 -m venv venv
+  ```
+3. Activate the virtual environment in Linux and install flask:
+  ```bash
+   source venv/bin/activate
+
+   pip install flask
+  ```
 
 
 ### 6.2 Configuring Roles and Permissions
@@ -114,7 +101,7 @@ def require_permission(permission):
 ```
 
 ### 6.4 Using Decorators or Wrapper Functions
-Use the `@require_permission(permission)` decorator on specific routes to restrict access:
+Use the `@require_permission(permission)` decorator on specific routes to restrict access.
 
 ### 6.5 Example Routes
 ```python
@@ -133,6 +120,8 @@ def read_items():
 
 ### 6.6 Complete Example (Flask)
 Below is a complete Flask application demonstrating RBAC with a simple in-memory token check:
+
+**Note:** Create `app.py` file and paste following code:
 
 ```python
 # app.py
@@ -201,6 +190,42 @@ if __name__ == "__main__":
     app.run(debug=True)
 ```
 
+
+### **Run Python (Flask) Step-by-Step**
+
+1. **Run program**:
+    ```bash
+    python app.py
+    ```
+2. **Send requests** using cURL:
+    ```bash
+    # Create an item (Admin or Editor token required for 'create' permission)
+    curl -X POST \
+         -H "Authorization: Bearer admin_token" \
+         http://127.0.0.1:5000/create
+
+    # Read items (any role with 'read' permission)
+    curl -X GET \
+         -H "Authorization: Bearer viewer_token" \
+         http://127.0.0.1:5000/read
+
+    # Update item (Admin or Editor token required for 'update')
+    curl -X PUT \
+         -H "Authorization: Bearer editor_token" \
+         http://127.0.0.1:5000/update
+
+    # Delete item (Admin token required for 'delete')
+    curl -X DELETE \
+         -H "Authorization: Bearer admin_token" \
+         http://127.0.0.1:5000/delete
+    ```
+3. Verify that each endpoint responds correctly based on the token provided.
+
+![](./images/w28.png)
+
+**Note:** Make sure to exit python flask server before proceeding to next steps.
+
+
 ---
 
 ## 7. Implementing RBAC in Node.js
@@ -211,11 +236,15 @@ cd ~/Desktop
 
 mkdir rbac-node && cd rbac-node
 
+npm init -y
+
 npm install express jsonwebtoken
 ```
 
 ### 7.2 Complete Example (Express)
 Below is a complete Express application demonstrating RBAC with a simple JWT flow:
+
+**Note:** Create `rolesConfig.js` file and paste following code:
 
 ```js
 // rolesConfig.js
@@ -225,6 +254,9 @@ module.exports = {
   Viewer: ["read"]
 };
 ```
+
+**Note:** Create `server.js` file and paste following code:
+
 
 ```js
 // server.js
@@ -305,40 +337,9 @@ app.listen(3000, () => {
 
 ## 8. How to Call and Test the APIs
 
-### 8.1 **Python (Flask) Step-by-Step**
+### **Node.js (Express) Step-by-Step**
 1. **Install dependencies and run**:
     ```bash
-    pip install flask
-    python app.py
-    ```
-2. **Send requests** using cURL:
-    ```bash
-    # Create an item (Admin or Editor token required for 'create' permission)
-    curl -X POST \
-         -H "Authorization: Bearer admin_token" \
-         http://127.0.0.1:5000/create
-
-    # Read items (any role with 'read' permission)
-    curl -X GET \
-         -H "Authorization: Bearer viewer_token" \
-         http://127.0.0.1:5000/read
-
-    # Update item (Admin or Editor token required for 'update')
-    curl -X PUT \
-         -H "Authorization: Bearer editor_token" \
-         http://127.0.0.1:5000/update
-
-    # Delete item (Admin token required for 'delete')
-    curl -X DELETE \
-         -H "Authorization: Bearer admin_token" \
-         http://127.0.0.1:5000/delete
-    ```
-3. Verify that each endpoint responds correctly based on the token provided.
-
-### 8.2 **Node.js (Express) Step-by-Step**
-1. **Install dependencies and run**:
-    ```bash
-    npm install express jsonwebtoken
     node server.js
     ```
 2. **Obtain a token** by calling the `/login` endpoint with a chosen role:
@@ -352,6 +353,9 @@ app.listen(3000, () => {
     #   "token": "<JWT_TOKEN_HERE>"
     # }
     ```
+
+    ![](./images/w29.png)
+
 3. **Use the token** in subsequent requests:
     ```bash
     # Create (requires "create" permission)
@@ -370,17 +374,19 @@ app.listen(3000, () => {
     curl -X DELETE http://localhost:3000/delete \
          -H "Authorization: Bearer <JWT_TOKEN_HERE>"
     ```
+
+    ![](./images/w30.png)
+
 4. Verify that each endpoint responds correctly based on the token provided. Try different roles (`Admin`, `Editor`, `Viewer`) to confirm that the permissions work as expected.
 
----
+**Note:** Make sure to exit node server before proceeding to next lab.
 
-## 9. Summary and Next Steps
-In this guide, you learned how to set up a basic RBAC system in a pre-built **Python** and **Node.js** application:
+
+#### Summary
+In this lab, you learned how to set up a basic RBAC system in a pre-built **Python** and **Node.js** application:
 1. Defined user roles and permissions.
 2. Implemented middleware or decorators to enforce permissions.
 3. Used route-level protection with the assigned user role.
 4. Tested the endpoints by calling them with different tokens/roles.
 
-
-**Congratulations!** You've successfully implemented a basic RBAC system. This foundational approach can scale with your application and help maintain security standards for different user roles.
 

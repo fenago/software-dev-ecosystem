@@ -1,6 +1,5 @@
-# Lab: Set up a secure server configuration, including basic firewall rules
+## Lab: Set up a secure server configuration, including basic firewall rules
 
-## Introduction
 In this lab, you will learn how to set up a secure server configuration on Microsoft Azure. You will create a virtual machine, apply a basic firewall configuration, and verify that your rules are working correctly.
 
 ---
@@ -21,7 +20,7 @@ In this lab, you will learn how to set up a secure server configuration on Micro
 
 ---
 
-## Section 1: Create a Virtual Machine
+### Section 1: Create a Virtual Machine
 
 1. **Sign in to Azure Portal**
    - Open your web browser and go to the [Azure Portal](https://portal.azure.com/).
@@ -33,44 +32,67 @@ In this lab, you will learn how to set up a secure server configuration on Micro
    - Select **Ubuntu Server** from the search results.
    - Click **Create**.
 
+![](./images/w1.png)
+
 3. **Configure Basic Settings**
-   - **Resource Group**: Select an existing resource group : `rg-student-lab`.
+   - **Resource Group**: Select an existing resource group : `software-ecosystem-student-tmp`.
    - **Virtual Machine Name**: Use your name as the prefix. For example, `YOUR_NAME-ubuntu-vm`.
-   - **Region**: Choose a region close to you or as instructed.
+   - **Region**: `(US) WEST US 2`.
    - **Image**: Verify it's set to **Ubuntu Server**.
-   - **Size**: Select a size appropriate for this lab (e.g., `Standard B1s`).
+   - **Size**: Please make sure to select `B1s`.
+
+![](./images/w2.png)
+
+![](./images/w3.png)
+
+**IMPORTANT**: If `B1s` size is not available, then you can select `Standard_D2s_v3` or any other available size.
 
 4. **Administrator Account**
    - **Authentication type**: Select & enter **Password**.
-   - **Username**: For example, `fenago`.
+   - **Username**:  `fenago`
+   - **Password**: Make sure to remember the password you enter or use same password as Azure account.
+
+![](./images/w4.png)
 
 5. **Inbound Port Rules**
    - To keep this lab secure, do not allow all ports publicly. However, for the sake of this exercise, you may allow **SSH (port 22)** so you can connect.
    - Any other ports you need should be locked down until you configure your firewall properly.
 
+![](./images/w5.png)
+
 6. **Disks & Networking**
-   - **Disks**: Use the default OS disk settings (Standard HDD).
+   - **Disks**: Use the OS disk type `Standard HDD`.
    - **Networking**: A default Virtual Network and Subnet should be created. Keep the default settings.
    - **Public IP**: Make sure a Public IP is assigned if you need to SSH from the internet.
    - **NIC Network Security Group**: Select **Basic** and allow **SSH**.
 
+![](./images/w6.png)
+
 7. **Management, Advanced, and Tags**
-   - Accept defaults unless you have specific requirements or instructions.
+   - Accept defaults
 
 8. **Review + Create**
    - Review all settings on the **Review + create** tab.
    - If everything is correct, click **Create**.
 
+![](./images/w7.png)
+
 9. **Wait for Deployment**
    - The VM deployment can take a few minutes. Once done, proceed to the next section.
 
+![](./images/w8.png)
+
+
 ---
 
-## Section 2: Connect to the VM
+### Section 2: Connect to the VM
 
 1. **Locate Public IP**
    - In the Azure Portal, navigate to the new VM’s **Overview** page.
    - Copy the **Public IP address**.
+
+![](./images/w9.png)
+
 
 2. **SSH into the VM** (assuming you allowed SSH in your inbound rules):
    ```bash
@@ -81,9 +103,11 @@ In this lab, you will learn how to set up a secure server configuration on Micro
 3. **Confirm Connection**
    - Once connected, you should see a terminal prompt like: `fenago@YOUR_NAME-ubuntu-vm:~$`
 
+![](./images/w10.png)
+
 ---
 
-## Section 3: Familiarize Yourself with VM Settings
+### Section 3: Familiarize Yourself with VM Settings
 
 Before configuring firewalls, it’s a good practice to check basic server health and settings:
 
@@ -102,7 +126,7 @@ Before configuring firewalls, it’s a good practice to check basic server healt
 
 ---
 
-## Section 4: Install and Configure UFW on Ubuntu
+### Section 4: Install and Configure UFW on Ubuntu
 
 Now that you’re connected to the VM, you can install and configure the Uncomplicated Firewall (UFW), which is a simple yet effective way to manage firewall rules on Ubuntu.
 
@@ -118,6 +142,9 @@ Now that you’re connected to the VM, you can install and configure the Uncompl
    ```bash
    sudo ufw status
    ```
+
+   ![](./images/w11.png)
+
 4. **Set Default Policies** (it’s a good security practice to deny all incoming and allow all outgoing traffic by default):
    ```bash
    sudo ufw default deny incoming
@@ -128,7 +155,7 @@ Now that you’re connected to the VM, you can install and configure the Uncompl
      ```bash
      sudo ufw allow 22
      ```
-   - **HTTP (port 80)**, if you plan to run a web server:
+   - **HTTP (port 80)**, To run a web server:
      ```bash
      sudo ufw allow 80
      ```
@@ -148,42 +175,48 @@ Now that you’re connected to the VM, you can install and configure the Uncompl
    ```
    - You should see rules for 22, 80, and 443 (if you allowed them).
 
+   ![](./images/w12.png)
+
 ---
 
-## Section 5: Configure Azure Network Security Group (NSG) Rules
+### Section 5: Configure Azure Network Security Group (NSG) Rules
 
 In addition to the VM’s internal firewall (UFW), Azure enforces inbound and outbound rules through a Network Security Group (NSG). Let’s ensure our Azure NSG rules align with what we configured on the VM.
 
 1. **Locate the Network Interface**
-   - In the Azure Portal, go to **Virtual machines** and select your VM (for example, `VM-<YourName>`).
-   - On the left-hand side, under **Settings**, click **Networking**.
-2. **View or Create an NSG**
+   - In the Azure Portal, go to **Virtual machines** and select your VM (for example, `YOUR_NAME-ubuntu-vm`).
+   - On the left-hand side, under **Networking**, click **Network Settings**.
+2. **View  an NSG**
    - You should see existing inbound port rules for your VM’s NSG.
-   - If an NSG is not already created, follow the prompt to create one.
+
+   ![](./images/w13.png)
+
 3. **Add or Adjust Inbound Security Rules**
    - Click **Add inbound port rule**.
    - **Source**: `Any` (or restrict to specific IP address ranges as needed for better security).
    - **Source port ranges**: `*`.
    - **Destination**: `Any`.
-   - **Destination port ranges**: Enter the port you want to open (e.g., `22` for SSH).
+   - **Service**: `HTTP`.
    - **Protocol**: `TCP`.
    - **Action**: `Allow`.
-   - **Name**: Provide a descriptive name (e.g., `Allow-SSH-22`).
+   - **Name**: Provide a descriptive name (e.g., `Allow-80-http`).
    - Click **Add** or **Save** to apply the new rule.
+
+   ![](./images/w14.png)
+
 4. **Confirm Any Additional Ports**
-   - If you opened HTTP (80) or HTTPS (443) on your VM, ensure you add corresponding rules in your NSG.
+   - If you opened any other port on your VM, ensure you add corresponding rules in your NSG.
 5. **Review Default NSG Rules**
-   - By default, Azure might automatically create an SSH rule when you create the VM. Adjust as necessary.
+   - Review all the Default NSG rules
 
 ---
 
-## Section 6: Install and Test Nginx
+### Section 6: Install and Test Nginx
 
 Nginx is a popular open-source web server. Let’s install it and verify whether it’s accessible based on our firewall settings.
 
 1. **Install Nginx**
    ```bash
-   sudo apt-get update -y
    sudo apt-get install -y nginx
    ```
    - This will also install any dependencies needed for Nginx.
@@ -203,32 +236,19 @@ Nginx is a popular open-source web server. Let’s install it and verify whether
 4. **Test Access from a Browser**
    - On your local machine, open a web browser and go to `http://<public-ip>`.
    - If everything is correctly set up, you should see the default Nginx welcome page.
+   ![](./images/w15.png)
+
 5. **Test Blocking by Removing or Blocking Port 80**
    - If you remove port 80 from UFW or your NSG, retry loading `http://<public-ip>` in the browser. It should fail to connect.
    - This confirms your firewall rules are actively controlling access.
+   ![](./images/w16.png)
 
 ---
 
-## Section 7: Verification
-
-1. **Confirm Firewall Blocked Ports**
-   - From your local machine, attempt to connect to a port you did not explicitly allow (e.g., `telnet <public-ip> 1234`). This should fail.
-
-2. **Check Allowed Ports**
-   - Use SSH (`ssh fenago@<public-ip>`) or HTTP/HTTPS tests to confirm the allowed ports function properly.
-
-3. **Monitor Azure Logs**
-   - In the Azure Portal, under the VM’s **Monitoring** or **Diagnostics** section, you can enable or view network logs.
-
-4. **Inspect UFW Logs (Optional)**
-   - On the VM, check `/var/log/ufw.log` (if enabled) to see traffic that’s allowed or blocked by UFW.
-
----
-
-## Section 8: Stop VM
-
+### Section 7: Stop VM
 Make sure to to **Stop** the VM from the Azure Portal.
 
+![](./images/w17.png)
 
 ---
 
