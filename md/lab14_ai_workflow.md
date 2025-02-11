@@ -219,10 +219,10 @@ Create a flow to:
 
    Placement cost: $130,000
 
-
    Generate an text invoice for above hospital staffing quotes in details. Add 25% misc charges and 1340$ Tax
    ```
 
+``
 
 3. Run the flow and review the generated invoice.
 
@@ -241,7 +241,7 @@ Explore the flow by giving different prompts and bigger calculations.
 
 
 
-# **Task: Canadian Federal Government Document Summarizer**
+# **Bonus Task: Canadian Federal Government Document Summarizer**
 
 ### **Objective**:
 Create a flow to:

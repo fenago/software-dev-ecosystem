@@ -107,6 +107,12 @@ The VM will shut down at the scheduled time automatically.
 ![](./images/w27.png)
 
 
+## **Step 5: Delete VM**
+Make sure to delete the VM by clicking `Delete` button and selecting following options:
+
+![](./images/d1.png)
+
+
 ### **Conclusion**
 
 - Assigned IAM roles using RBAC.
